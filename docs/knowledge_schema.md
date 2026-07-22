@@ -129,8 +129,6 @@ These fields are the bridge between the structured workbooks and the automated p
 
 ## Workbook files
 
-The workbooks are not committed to this repository. They contain 1,414 rows of consulting knowledge derived from real customer engagements (1,000-agent Avaya migration, 50-agent greenfield, 175-agent UCCX global migration) and represent significant AbhavTech intellectual property.
-
-Enterprise clients who engage AbhavTech receive workbook access as part of the platform licensing. Researchers and portfolio reviewers can request a redacted sample via [abhavtech.com/contact](https://abhavtech.com/contact).
+The workbooks are not committed to this repository — they are the proprietary knowledge layer of the system.
 
 The schema is fully documented here. The pipeline's workbook-access layer (`knowledge/README.md`) describes the query interface.

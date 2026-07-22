@@ -43,9 +43,4 @@ result = formula.evaluate(inputs={"concurrent_calls": 500, "aht_seconds": 240})
 
 ## Proprietary content notice
 
-The workbooks contain 1,414 rows of structured consulting knowledge derived from:
-- Three real customer engagements (1,000-agent Avaya migration, 50-agent greenfield, 175-agent UCCX multi-site migration)
-- AbhavTech consulting practice
-- Expert technical review of Cisco, GCP, and regulatory primary sources
-
-This is the proprietary content that cannot be reconstructed from model weights. Enterprise licensing enquiries: [abhavtech.com/contact](https://abhavtech.com/contact)
+The workbooks are the proprietary knowledge layer of this system and are not committed to this repository.
