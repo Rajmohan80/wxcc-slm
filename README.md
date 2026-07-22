@@ -16,7 +16,7 @@ Most AI assistants answer general questions. This system is designed to answer *
 
 > *"Given this customer's contact centre scenario, what is the correct Cisco Webex Contact Center architecture, and what are the compliance, capacity, and migration constraints?"*
 
-That question requires CCIE-level reasoning across product knowledge, capacity rules, data residency regulations, migration risk, and architecture patterns. This system encodes 18 years of that reasoning — explicitly, verifiably, and traceably — into a structured knowledge layer backed by a RAG pipeline.
+That question requires CCIE-level reasoning across product knowledge, capacity rules, data residency regulations, migration risk, and architecture patterns. This system encodes  years of that reasoning — explicitly, verifiably, and traceably — into a structured knowledge layer backed by a RAG pipeline.
 
 It is not a chatbot. It is a **domain-specific AI consulting system**.
 
