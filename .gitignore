@@ -1,0 +1,63 @@
+# Secrets — NEVER commit
+.env
+*.env
+secrets/
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+dist/
+*.egg-info/
+.eggs/
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+venv/
+env/
+.venv/
+
+# Corpus — not committed (proprietary content + large files)
+webex_slm_corpus/
+!webex_slm_corpus/.gitkeep
+
+# Workbooks — proprietary IP, not committed
+knowledge/*.xlsx
+knowledge/*.xls
+!knowledge/README.md
+
+# Vector store (local dev)
+.qdrant/
+chroma_db/
+*.bin
+*.hnswlib
+
+# MLflow
+mlruns/
+
+# Jupyter
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+
+# OS
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+
+# IDE
+.vscode/settings.json
+.idea/
+*.iml
+
+# Logs
+*.log
+logs/
+
+# GCP credentials
+gcp-credentials.json
+service-account-*.json

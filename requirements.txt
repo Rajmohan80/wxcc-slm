@@ -1,0 +1,44 @@
+# AbhavTech WxCC SLM — Python Dependencies
+# Install: pip install -r requirements.txt
+#
+# Groups are in install order — corpus tools first (no GPU needed),
+# then pipeline dependencies (BGE-M3 downloads ~2GB on first run).
+
+# ── Corpus tools (Phase 2) ────────────────────────────────────────────────────
+requests>=2.31.0
+html2text>=2024.2.26
+pdfminer.six>=20221105
+beautifulsoup4>=4.12.0
+lxml>=5.0.0
+
+# ── Vector DB + Embeddings (Phase 3) ─────────────────────────────────────────
+qdrant-client>=1.9.0
+sentence-transformers>=3.0.0        # loads BAAI/bge-m3
+langchain-text-splitters>=0.2.0
+
+# ── LLM + Orchestration (Phases 4–5) ─────────────────────────────────────────
+anthropic>=0.34.0                   # Claude API (Haiku + Sonnet)
+langchain>=0.2.0
+langchain-anthropic>=0.1.0
+langgraph>=0.1.0
+python-dotenv>=1.0.0
+
+# ── MCP Server (Phase 6) ─────────────────────────────────────────────────────
+fastmcp>=0.9.0
+
+# ── REST API (Phase 6) ───────────────────────────────────────────────────────
+fastapi>=0.111.0
+uvicorn[standard]>=0.30.0
+pydantic>=2.7.0
+
+# ── Knowledge layer ───────────────────────────────────────────────────────────
+openpyxl>=3.1.0                     # workbook A–D access
+
+# ── Observability ─────────────────────────────────────────────────────────────
+mlflow>=2.14.0
+evidently>=0.4.0
+
+# ── Dev / testing ─────────────────────────────────────────────────────────────
+pytest>=8.0.0
+pytest-asyncio>=0.23.0
+httpx>=0.27.0                       # FastAPI test client

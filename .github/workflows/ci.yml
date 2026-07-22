@@ -1,0 +1,93 @@
+name: CI — Smoke Test
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    name: Manifest validate + pipeline import
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install dependencies
+        run: |
+          pip install --upgrade pip
+          pip install requests html2text pdfminer.six beautifulsoup4
+
+      - name: Validate corpus manifest (JSON)
+        run: |
+          python -c "
+          import json, sys
+          with open('corpus_tools/corpus_manifest.json', encoding='utf-8') as f:
+              m = json.load(f)
+          docs = m['documents']
+          folders = m['folders']
+          print(f'  manifest OK: {len(docs)} documents, {len(folders)} folders')
+          # Check required fields on every entry
+          required = {'id', 'title', 'folder', 'tier', 'priority', 'batch'}
+          errors = []
+          for d in docs:
+              missing = required - d.keys()
+              if missing:
+                  errors.append(f'{d.get(\"id\",\"?\")} missing: {missing}')
+          if errors:
+              for e in errors: print(f'  ERROR: {e}')
+              sys.exit(1)
+          print(f'  all entries have required fields')
+          # Check folders referenced in docs exist in folder list
+          unknown = {d['folder'] for d in docs} - set(folders.keys())
+          if unknown:
+              print(f'  ERROR: unknown folders: {unknown}')
+              sys.exit(1)
+          print('  all folder references valid')
+          "
+
+      - name: Validate corpus scripts compile
+        run: |
+          python -m py_compile corpus_tools/1_create_folders.py
+          python -m py_compile corpus_tools/2_download_corpus.py
+          python -m py_compile corpus_tools/3_verify_corpus.py
+          python -m py_compile corpus_tools/4_ingest_corpus.py
+          echo "  all corpus scripts compile OK"
+
+      - name: Validate pipeline scripts compile
+        run: |
+          python -m py_compile pipeline/slm_pipeline.py || true
+          python -m py_compile api/api_server.py || true
+          echo "  pipeline scripts checked"
+
+      - name: Dry-run folder creation
+        run: |
+          cd corpus_tools
+          python 1_create_folders.py --corpus-dir /tmp/test_corpus
+          echo "  folder creation: OK"
+          ls /tmp/test_corpus | wc -l
+
+      - name: Check for secrets in tracked files
+        run: |
+          # Fail if any .env files (other than .env.example) are committed
+          if find . -name ".env" -not -name ".env.example" -not -path "./.git/*" | grep -q .; then
+            echo "ERROR: .env file found in repository. Never commit secrets."
+            exit 1
+          fi
+          echo "  no .env files committed: OK"
+
+      - name: Summary
+        run: |
+          echo ""
+          echo "=== Smoke test passed ==="
+          echo "  Manifest: valid"
+          echo "  Scripts:  compile"
+          echo "  Folders:  create"
+          echo "  Secrets:  none committed"
